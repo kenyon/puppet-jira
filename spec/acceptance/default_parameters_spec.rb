@@ -7,9 +7,11 @@ describe 'jira postgresql' do
         distribution => 'jre',
       }
 
-      class { 'postgresql::globals':
-        manage_package_repo => true,
-        version             => '9.4',
+      if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
+        class { 'postgresql::globals':
+          manage_package_repo => true,
+          version             => '9.4',
+        }
       }
 
       class { 'postgresql::server': }
